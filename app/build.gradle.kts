@@ -6,11 +6,11 @@ plugins {
 
 android {
     namespace = "com.implisit.belajar_room"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.implisit.belajar_room"
-        minSdk = 30
+        minSdk = 34
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
