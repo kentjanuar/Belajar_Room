@@ -32,6 +32,8 @@ class MainActivity : AppCompatActivity() {
         adapterDaftar = adapterDaftar(arDaftar)
         var _rvDaftar = findViewById<RecyclerView>(R.id.rvDaftar)
 
+        val _keFavorit = findViewById<Button>(R.id.keFavorit)
+
         _rvDaftar.layoutManager = LinearLayoutManager(this)
         _rvDaftar.adapter = adapterDaftar
 
@@ -40,15 +42,22 @@ class MainActivity : AppCompatActivity() {
         DB = daftarBelanjaDB.getDatabase(this)
         val _fabAdd = findViewById<FloatingActionButton>(R.id.fabAdd)
 
+        //onstart saya keluarkan supaya data langsung muncul
+        super.onStart()
+        CoroutineScope(Dispatchers.Main).async{
+            val daftarBelanja = DB.fundaftarBelanjaDAO().selectALLNoFav()
+            Log.d("data ROOM", daftarBelanja.toString())
+            adapterDaftar.isiData(daftarBelanja)
+        }
+
         _fabAdd.setOnClickListener {
             startActivity(Intent(this, TambahDaftar::class.java))
 
-            super.onStart()
-            CoroutineScope(Dispatchers.Main).async{
-                val daftarBelanja = DB.fundaftarBelanjaDAO().selectAll()
-                Log.d("data ROOM", daftarBelanja.toString())
-                adapterDaftar.isiData(daftarBelanja)
-            }
+        }
+
+        _keFavorit.setOnClickListener{
+            val intent = Intent(this,halamanFavorit::class.java)
+            startActivity(intent)
         }
 
         adapterDaftar.setOnItemClickCallback(

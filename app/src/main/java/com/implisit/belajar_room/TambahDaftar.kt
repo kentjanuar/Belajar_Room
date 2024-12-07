@@ -1,5 +1,6 @@
 package com.implisit.belajar_room
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -73,6 +74,9 @@ class TambahDaftar : AppCompatActivity() {
                     pilihid = iID
                 )
             }
+
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
 
         btnTambah.setOnClickListener {
@@ -84,6 +88,8 @@ class TambahDaftar : AppCompatActivity() {
                         jumlah = _etJumlah.text.toString()
                     ))
             }
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
     }
 }
