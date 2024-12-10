@@ -70,5 +70,15 @@
         app:layout_constraintStart_toStartOf="@+id/btnEdit"
         app:layout_constraintTop_toBottomOf="@+id/btnEdit" />
 
+    <Button
+        android:id="@+id/btnSelesai"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
+        android:text="selesai"
+        app:layout_constraintBottom_toBottomOf="@+id/btnStatus"
+        app:layout_constraintEnd_toStartOf="@+id/btnStatus"
+        app:layout_constraintTop_toTopOf="@+id/btnStatus" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

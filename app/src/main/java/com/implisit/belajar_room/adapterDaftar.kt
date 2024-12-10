@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.room.RoomDatabase
 import com.implisit.belajar_room.database.daftarBelanja
 import com.implisit.belajar_room.database.daftarBelanjaDB
+import com.implisit.belajar_room.database.historyBarang
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -30,6 +31,7 @@ class adapterDaftar (private val daftarBelanja : MutableList<daftarBelanja>):
 
         var _btnEdit = itemView.findViewById<ImageView>(R.id.btnEdit)
         var _btnDelete = itemView.findViewById<ImageView>(R.id.btnDelete)
+        var _btnSelesai = itemView.findViewById<Button>(R.id.btnSelesai)
 
     }
 
@@ -46,6 +48,19 @@ class adapterDaftar (private val daftarBelanja : MutableList<daftarBelanja>):
         holder._tvTanggal.setText(daftar.tanggal)
         holder._tvItemBarang.setText(daftar.item)
         holder._tvJumlahBarang.setText(daftar.jumlah)
+        holder._btnSelesai.setOnClickListener{
+            CoroutineScope(Dispatchers.IO).async {
+                val DB = daftarBelanjaDB.getDatabase(it.context)
+                val history = historyBarang(
+                    tanggal = daftar.tanggal,
+                    item = daftar.item,
+                    jumlah = daftar.jumlah,
+                    status = daftar.status
+                )
+                DB.funhistoryBarangDAO().insert(history)
+                DB.fundaftarBelanjaDAO().delete(daftar)
+            }
+        }
 
         holder._btnEdit.setOnClickListener {
             val intent = Intent(it.context, TambahDaftar::class.java)
